@@ -290,11 +290,7 @@ function jir_rules_sms_files_creation_allowed()
     $dir_ready_files = 'public://smsfiles/ready/';
     $ready_files_count = count_files($dir_ready_files);
     $allowed_files_day = variable_get('number_jobs_per_day');
-    if ($ready_files_count < $allowed_files_day) {
-        return true;
-    } else {
-        return false;
-    }
+    return $ready_files_count < $allowed_files_day;
 }
 
 function count_files($dir)
