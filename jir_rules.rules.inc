@@ -248,11 +248,16 @@ function jir_rules_send_user_subscription($email){
         'data' => drupal_http_build_query(array('email' => $email, 'fullname' => $name)),
         'timeout' => 15
     );
-    $result = drupal_http_request('https://newsletter.jobinuganda.com/index.php/addNewsletterSubscriber', $options);
-    watchdog('JIU Rules', 'Request: ' . $result->request .
-        ' | Result code: ' . $result->code .
-        ' | Protocol: ' . $result->protocol .
-        ' | Status message: ' . $result->status_message, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
+	$url = substr(base_path(), strripos(base_path(), 'job'));
+	if ($url !== false and !empty(trim($url))) {
+        $result = drupal_http_request('https://newsletter.' . $url . 'index.php/addNewsletterSubscriber', $options);
+        watchdog('JIU Rules', 'Request: ' . $result->request .
+            ' | Result code: ' . $result->code .
+            ' | Protocol: ' . $result->protocol .
+            ' | Status message: ' . $result->status_message);
+    } else {
+        watchdog('JIU Rules', 'Base url not found');
+    }
 }
 
 function jir_rules_send_user_unsubscription($email){
@@ -265,8 +270,7 @@ function jir_rules_send_user_unsubscription($email){
     watchdog('JIU Rules', 'Request: ' . $result->request .
         ' | Result code: ' . $result->code .
         ' | Protocol: ' . $result->protocol .
-        ' | Status message: ' . $result->status_message,
-        $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
+        ' | Status message: ' . $result->status_message);
 }
 
 function jir_rules_sms_files_creation_allowed(){
