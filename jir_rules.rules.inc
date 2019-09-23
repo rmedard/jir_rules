@@ -239,22 +239,22 @@ function jir_rules_send_sms_files_ftp()
 
 function jir_rules_send_user_subscription($email)
 {
-    $query = db_select('simplenews_realname', 'sub')
-        ->condition('sub.mail', $email, '=')
-        ->fields('sub', array('realname'));
-    $query_res = $query->execute()->fetchObject();
-    $name_obj = json_encode($query_res);
-    $name_dec = json_decode($name_obj, true);
-    $name = $name_dec['realname'];
-
-    $options = array(
-        'method' => 'GET',
-        'data' => drupal_http_build_query(array('email' => $email, 'fullname' => $name)),
-        'timeout' => 15
-    );
     global $base_url;
     $domain = substr($base_url, strripos($base_url, 'job'));
     if ($domain !== false && !empty(trim($domain))) {
+        $query = db_select('simplenews_realname', 'sub')
+            ->condition('sub.mail', $email, '=')
+            ->fields('sub', array('realname'));
+        $query_res = $query->execute()->fetchObject();
+        $name_obj = json_encode($query_res);
+        $name_dec = json_decode($name_obj, true);
+        $name = $name_dec['realname'];
+
+        $options = array(
+            'method' => 'GET',
+            'data' => drupal_http_build_query(array('email' => $email, 'fullname' => $name)),
+            'timeout' => 15
+        );
         $result = drupal_http_request('https://newsletter.' . $domain . '/index.php/addNewsletterSubscriber', $options);
         watchdog('JIU Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
@@ -267,14 +267,14 @@ function jir_rules_send_user_subscription($email)
 
 function jir_rules_send_user_unsubscription($email)
 {
-    $options = array(
-        'method' => 'GET',
-        'data' => drupal_http_build_query(array('email' => $email)),
-        'timeout' => 15
-    );
     global $base_url;
     $domain = substr($base_url, strripos($base_url, 'job'));
     if ($domain !== false && !empty(trim($domain))) {
+        $options = array(
+            'method' => 'GET',
+            'data' => drupal_http_build_query(array('email' => $email)),
+            'timeout' => 15
+        );
         $result = drupal_http_request('https://newsletter.' . $domain . '/deleteNewsletterSubscriber', $options);
         watchdog('JIU Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
