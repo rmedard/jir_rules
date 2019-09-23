@@ -249,7 +249,7 @@ function jir_rules_send_user_subscription($email){
         'timeout' => 15
     );
 	$url = substr(base_path(), strripos(base_path(), 'job'));
-	if ($url !== false and !empty(trim($url))) {
+	if ($url !== false && !empty(trim($url))) {
         $result = drupal_http_request('https://newsletter.' . $url . 'index.php/addNewsletterSubscriber', $options);
         watchdog('JIU Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
