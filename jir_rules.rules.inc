@@ -248,9 +248,10 @@ function jir_rules_send_user_subscription($email){
         'data' => drupal_http_build_query(array('email' => $email, 'fullname' => $name)),
         'timeout' => 15
     );
-	$url = substr(base_path(), strripos(base_path(), 'job'));
-	if ($url !== false && !empty(trim($url))) {
-        $result = drupal_http_request('https://newsletter.' . $url . 'index.php/addNewsletterSubscriber', $options);
+    global $base_url;
+	$domain = substr($base_url, strripos($base_url, 'job'));
+	if ($domain !== false && !empty(trim($domain))) {
+        $result = drupal_http_request('https://newsletter.' . $domain . '/index.php/addNewsletterSubscriber', $options);
         watchdog('JIU Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
@@ -266,8 +267,9 @@ function jir_rules_send_user_unsubscription($email){
         'data' => drupal_http_build_query(array('email' => $email)),
         'timeout' => 15
     );
-    $url = substr(base_path(), strripos(base_path(), 'job'));
-    $result = drupal_http_request('https://newsletter.' . $url . 'deleteNewsletterSubscriber', $options);
+    global $base_url;
+    $domain = substr($base_url, strripos($base_url, 'job'));
+    $result = drupal_http_request('https://newsletter.' . $domain . '/deleteNewsletterSubscriber', $options);
     watchdog('JIU Rules', 'Request: ' . $result->request .
         ' | Result code: ' . $result->code .
         ' | Protocol: ' . $result->protocol .
