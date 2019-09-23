@@ -310,7 +310,7 @@ function count_files($dir){
 					) 
 				)
 	*/
-function jir_rules_send_application_cv_search($date_received, $firstname, $lastname, $email, $tel, 
+function jir_rules_send_application_cv_search($date_received, $firstName, $lastName, $email, $tel,
 			$covernote, $nationality, $diploma, $study, $languages, $experience, $sex, $filename, $submissionid){
 	//Lookup for job details: job id, job title and job category
 	$ids = array($submissionid);
@@ -343,9 +343,9 @@ function jir_rules_send_application_cv_search($date_received, $firstname, $lastn
 	//Date received
 	$date_received = date('Y-m-d H:i:s', $date_received);
 	//First name
-	$firstname = $firstname[0]['safe_value'];
+	$firstName = $firstName[0]['safe_value'];
 	//Last name
-	$lastname = $lastname[0]['safe_value'];
+	$lastName = $lastName[0]['safe_value'];
 	//Email
 	$email = $email[0]['email'];
 	//Telephone
@@ -405,8 +405,8 @@ function jir_rules_send_application_cv_search($date_received, $firstname, $lastn
 	}
 	$candidateProfile = array(
 		'DateReceived' => strval($date_received),   // Application date time
-		'FirstName' => strval($firstname),
-		'LastName' => strval($lastname),
+		'FirstName' => strval($firstName),
+		'LastName' => strval($lastName),
 		'Email' => strval($email),
 		'Tel' => strval($tel),
 		'JobId' => strval($jobid),  // ID of the job  - if unsollicitated, put jobId = 0
