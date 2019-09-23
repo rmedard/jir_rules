@@ -249,7 +249,8 @@ function jir_rules_send_user_subscription($email){
         'timeout' => 15
     );
     $result = drupal_http_request('https://newsletter.jobinuganda.com/index.php/addNewsletterSubscriber', $options);
-    watchdog('JIU Rules', 'Result code: ' . $result->code .
+    watchdog('JIU Rules', 'Request: ' . $result->request .
+        ' | Result code: ' . $result->code .
         ' | Protocol: ' . $result->protocol .
         ' | Status message: ' . $result->status_message,
         $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
@@ -257,11 +258,19 @@ function jir_rules_send_user_subscription($email){
 
 function jir_rules_send_user_unsubscription($email){
 	$URL = 'https://newsletter.jobinuganda.com/index.php/deleteNewsletterSubscriber?email='.$email;
-	watchdog('Job POST', 'Url: '.$URL, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
-	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_URL, $URL);
-	$return = curl_exec($curl);
-	curl_close($curl);
+	watchdog('JIU Rules', 'Url: '. $URL, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
+
+    $options = array(
+        'method' => 'GET',
+        'data' => drupal_http_build_query(array('email' => $email)),
+        'timeout' => 15
+    );
+    $result = drupal_http_request('https://newsletter.jobinuganda.com/index.php/deleteNewsletterSubscriber', $options);
+    watchdog('JIU Rules', 'Request: ' . $result->request .
+        ' | Result code: ' . $result->code .
+        ' | Protocol: ' . $result->protocol .
+        ' | Status message: ' . $result->status_message,
+        $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
 }
 
 function jir_rules_sms_files_creation_allowed(){
