@@ -242,10 +242,19 @@ function jir_rules_send_user_subscription($email){
 	$name = $name_dec['realname'];
 	$URL = 'https://newsletter.jobinuganda.com/index.php/addNewsletterSubscriber?email='.$email.'&fullname='.$name;
 	watchdog('JIU Rules', 'Url: '.$URL, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
-	$curl = curl_init();
-	curl_setopt($curl, CURLOPT_URL, $URL);
-	$return = curl_exec($curl);
-	curl_close($curl);
+
+	$options = array(
+	    'method' => 'GET',
+        'data' => drupal_http_build_query(array('email' => $email, 'fullname' => $name)),
+        'timeout' => 15
+    );
+    $result = drupal_http_request('https://newsletter.jobinuganda.com/index.php/addNewsletterSubscriber', $options);
+    watchdog('JIU Rules', 'Request result: ' . json_encode($result), $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
+
+//	$curl = curl_init();
+//	curl_setopt($curl, CURLOPT_URL, $URL);
+//	$return = curl_exec($curl);
+//	curl_close($curl);
 }
 
 function jir_rules_send_user_unsubscription($email){
@@ -623,7 +632,8 @@ function country_code_to_country( $code ){
     if( $code == 'RU' ) $country = 'Russian Federation';
     if( $code == 'RW' ) $country = 'Rwanda';
     if( $code == 'BL' ) $country = 'Saint Barthelemy';
-    if( $code == 'SH' ) $country = 'Saint Helena'; 
+    if( $code == 'SH' ) $country = 'Saint Helena';
+ 
     if( $code == 'KN' ) $country = 'Saint Kitts and Nevis';
     if( $code == 'LC' ) $country = 'Saint Lucia';
     if( $code == 'MF' ) $country = 'Saint Martin';
