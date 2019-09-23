@@ -256,7 +256,7 @@ function jir_rules_send_user_subscription($email){
 }
 
 function jir_rules_send_user_unsubscription($email){
-	$URL = 'https://newsletter.jobinrwanda.com/index.php/deleteNewsletterSubscriber?email='.$email;
+	$URL = 'https://newsletter.jobinuganda.com/index.php/deleteNewsletterSubscriber?email='.$email;
 	watchdog('Job POST', 'Url: '.$URL, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, $URL);
