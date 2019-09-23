@@ -266,7 +266,8 @@ function jir_rules_send_user_unsubscription($email){
         'data' => drupal_http_build_query(array('email' => $email)),
         'timeout' => 15
     );
-    $result = drupal_http_request('https://newsletter.jobinuganda.com/deleteNewsletterSubscriber', $options);
+    $url = substr(base_path(), strripos(base_path(), 'job'));
+    $result = drupal_http_request('https://newsletter.' . $url . 'deleteNewsletterSubscriber', $options);
     watchdog('JIU Rules', 'Request: ' . $result->request .
         ' | Result code: ' . $result->code .
         ' | Protocol: ' . $result->protocol .
