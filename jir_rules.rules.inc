@@ -235,13 +235,13 @@ function jir_rules_send_sms_files_ftp(){
 }
 
 function jir_rules_send_user_subscription($email){
-	$query = db_select('simplenews_realname', 'sub')->condition('sub.mail', $email, '=')->fields('sub', array('realname'));
+	$query = db_select('simplenews_realname', 'sub')
+        ->condition('sub.mail', $email, '=')
+        ->fields('sub', array('realname'));
 	$query_res = $query->execute()->fetchObject();
 	$name_obj = json_encode($query_res);
 	$name_dec = json_decode($name_obj, true);
 	$name = $name_dec['realname'];
-	$URL = 'https://newsletter.jobinuganda.com/index.php/addNewsletterSubscriber?email='.$email.'&fullname='.$name;
-	watchdog('JIU Rules', 'Url: '.$URL, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
 
 	$options = array(
 	    'method' => 'GET',
@@ -252,14 +252,10 @@ function jir_rules_send_user_subscription($email){
     watchdog('JIU Rules', 'Request: ' . $result->request .
         ' | Result code: ' . $result->code .
         ' | Protocol: ' . $result->protocol .
-        ' | Status message: ' . $result->status_message,
-        $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
+        ' | Status message: ' . $result->status_message, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
 }
 
 function jir_rules_send_user_unsubscription($email){
-	$URL = 'https://newsletter.jobinuganda.com/index.php/deleteNewsletterSubscriber?email='.$email;
-	watchdog('JIU Rules', 'Url: '. $URL, $variables = NULL, $severity = WATCHDOG_NOTICE, $link = NULL);
-
     $options = array(
         'method' => 'GET',
         'data' => drupal_http_build_query(array('email' => $email)),
