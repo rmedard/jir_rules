@@ -256,12 +256,12 @@ function jir_rules_send_user_subscription($email)
             'timeout' => 15
         );
         $result = drupal_http_request('https://newsletter.' . $domain . '/index.php/addNewsletterSubscriber', $options);
-        watchdog('JIU Rules', 'Request: ' . $result->request .
+        watchdog('JIX Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
             ' | Status message: ' . $result->status_message);
     } else {
-        watchdog('JIU Rules', 'Base url not found');
+        watchdog('JIX Rules', 'Base url not found');
     }
 }
 
@@ -276,12 +276,12 @@ function jir_rules_send_user_unsubscription($email)
             'timeout' => 15
         );
         $result = drupal_http_request('https://newsletter.' . $domain . '/deleteNewsletterSubscriber', $options);
-        watchdog('JIU Rules', 'Request: ' . $result->request .
+        watchdog('JIX Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
             ' | Status message: ' . $result->status_message);
     } else {
-        watchdog('JIU Rules', 'Base url not found');
+        watchdog('JIX Rules', 'Base url not found');
     }
 }
 
