@@ -252,7 +252,7 @@ function jir_rules_send_user_subscription($email)
 
         $options = array(
             'method' => 'POST',
-            'data' => drupal_http_build_query(array('name' => $name, 'email' => $email, 'newsletter' => 13))
+            'data' => array('name' => $name, 'email' => $email, 'newsletter' => 13)
         );
         $result = drupal_http_request('https://newsletter.' . $domain . '/api/subscriber', $options);
         watchdog('JIX Rules', 'Request: ' . $result->request .
@@ -271,7 +271,7 @@ function jir_rules_send_user_unsubscription($email)
     if ($domain !== false && !empty(trim($domain))) {
         $options = array(
             'method' => 'DELETE',
-            'data' => drupal_http_build_query(array('email' => $email))
+            'data' => array('email' => $email)
         );
         $result = drupal_http_request('https://newsletter.' . $domain . '/api/subscriber', $options);
         watchdog('JIX Rules', 'Request: ' . $result->request .
