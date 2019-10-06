@@ -251,11 +251,10 @@ function jir_rules_send_user_subscription($email)
         $name = $name_dec['realname'];
 
         $options = array(
-            'method' => 'GET',
-            'data' => drupal_http_build_query(array('email' => $email, 'fullname' => $name)),
-            'timeout' => 15
+            'method' => 'POST',
+            'data' => drupal_http_build_query(array('name' => $name, 'email' => $email, 'newsletter' => 13))
         );
-        $result = drupal_http_request('https://newsletter.' . $domain . '/index.php/addNewsletterSubscriber', $options);
+        $result = drupal_http_request('https://newsletter.' . $domain . '/api/subscriber', $options);
         watchdog('JIX Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
