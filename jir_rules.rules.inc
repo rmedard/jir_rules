@@ -252,7 +252,7 @@ function jir_rules_send_user_subscription($email)
 
         $options = array(
             'method' => 'POST',
-            'data' => json_encode(array('name' => $name, 'email' => $email, 'newsletter' => 13)),
+            'data' => json_encode(array('name' => $name, 'email' => $email, 'newsletter' => strval(13))),
             'headers' => array('Content-Type' => 'application/json', 'Accept' => 'application/json')
         );
         $result = drupal_http_request('https://newsletter.' . $domain . '/api/subscriber', $options);
