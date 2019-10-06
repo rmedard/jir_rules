@@ -242,7 +242,7 @@ function jir_rules_send_sms_files_ftp()
     }
 }
 
-function jir_rules_send_user_subscription($email, $newsletterId)
+function jir_rules_send_user_subscription($email, $newsletter_id)
 {
     global $base_url;
     $domain = substr($base_url, strripos($base_url, 'job'));
@@ -257,7 +257,7 @@ function jir_rules_send_user_subscription($email, $newsletterId)
 
         $options = array(
             'method' => 'POST',
-            'data' => json_encode(array('name' => $name, 'email' => $email, 'newsletterId' => strval(13))),
+            'data' => json_encode(array('name' => $name, 'email' => $email, 'newsletterId' => strval($newsletter_id))),
             'headers' => array('Content-Type' => 'application/json', 'Accept' => 'application/json')
         );
         $result = drupal_http_request('https://newsletter.' . $domain . '/api/subscriber', $options);
