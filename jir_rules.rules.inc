@@ -270,11 +270,10 @@ function jir_rules_send_user_unsubscription($email)
     $domain = substr($base_url, strripos($base_url, 'job'));
     if ($domain !== false && !empty(trim($domain))) {
         $options = array(
-            'method' => 'GET',
-            'data' => drupal_http_build_query(array('email' => $email)),
-            'timeout' => 15
+            'method' => 'DELETE',
+            'data' => drupal_http_build_query(array('email' => $email))
         );
-        $result = drupal_http_request('https://newsletter.' . $domain . '/deleteNewsletterSubscriber', $options);
+        $result = drupal_http_request('https://newsletter.' . $domain . '/api/subscriber', $options);
         watchdog('JIX Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
