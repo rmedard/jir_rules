@@ -259,7 +259,7 @@ function jir_rules_send_user_subscription($email)
         watchdog('JIX Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
-            ' | Status message: ' . $result->status_message);
+            ' | Message: ' . json_encode($result));
     } else {
         watchdog('JIX Rules', 'Base url not found');
     }
@@ -279,7 +279,7 @@ function jir_rules_send_user_unsubscription($email)
         watchdog('JIX Rules', 'Request: ' . $result->request .
             ' | Result code: ' . $result->code .
             ' | Protocol: ' . $result->protocol .
-            ' | Status message: ' . $result->status_message);
+            ' | Message: ' . json_encode($result));
     } else {
         watchdog('JIX Rules', 'Base url not found');
     }
