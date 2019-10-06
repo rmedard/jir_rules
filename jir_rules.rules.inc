@@ -38,6 +38,11 @@ function jir_rules_rules_action_info()
                     'label' => t('Email'),
                     'required' => TRUE,
                 ),
+                'newsletter_id' => array(
+                    'type' => 'integer',
+                    'label' => t('Newsletter ID'),
+                    'required' => TRUE,
+                ),
             ),
         ),
         'jir_rules_send_user_unsubscription' => array(
@@ -237,7 +242,7 @@ function jir_rules_send_sms_files_ftp()
     }
 }
 
-function jir_rules_send_user_subscription($email)
+function jir_rules_send_user_subscription($email, $newsletterId)
 {
     global $base_url;
     $domain = substr($base_url, strripos($base_url, 'job'));
