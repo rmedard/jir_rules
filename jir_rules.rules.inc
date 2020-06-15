@@ -453,6 +453,7 @@ function jir_rules_send_application_cv_search($date_received, $firstName, $lastN
     //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     $result = curl_exec($ch);
     curl_close($ch);  // Seems like good practice
+    watchdog('Job application', 'Returned: ' . $result);
     if ($result !== false) {
         $ids = array($submissionid);
         $controller = entity_get_controller('entityform');
